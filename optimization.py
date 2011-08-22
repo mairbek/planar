@@ -13,9 +13,8 @@ def random_optimize(domain, cost_fun, points=1000, max_y=(10 ** 8), min_y=0):
         x = [random.randint(domain[i][0], domain[i][1])
              for i in range(len(domain))]
 
-        logger.debug("\tCurrent configuration %s" % x)
-
         cost = cost_fun(x)
+        logger.debug("x = %s, y = %s" % (x, cost))
 
         logger.debug("\tCost %s", cost)
 
