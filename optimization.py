@@ -68,34 +68,34 @@ def annealing_optimize(domain, cost_function, T=1000000.0, cool=0.99999, step=1,
          for i in range(len(domain))]
     y = None
 
-    global_opt = None
+    best_solution = None
 
     while T > 0.1:
         i = random.randint(0, len(domain) - 1)
 
         dir = random.randint(-step, step)
 
-        vecb = x[:]
-        vecb[i] += dir
-        if vecb[i] < domain[i][0]:
-            vecb[i] = domain[i][0]
-        elif vecb[i] > domain[i][1]:
-            vecb[i] = domain[i][1]
+        new_x = x[:]
+        new_x[i] += dir
+        if new_x[i] < domain[i][0]:
+            new_x[i] = domain[i][0]
+        elif new_x[i] > domain[i][1]:
+            new_x[i] = domain[i][1]
 
         ea = cost_function(x)
-        eb = cost_function(vecb)
+        eb = cost_function(new_x)
 
         p = pow(math.e, (-eb - ea) / T)
 
         if eb < ea or random.random() < p:
-            x = vecb
+            x = new_x
             y = eb
 
-        if global_opt is None:
-            global_opt = {"x": x, "y": y}
-        elif global_opt["y"] > y:
-            global_opt["x"] = x
-            global_opt["y"] = y
+        if best_solution is None:
+            best_solution = {"x": x, "y": y}
+        elif best_solution["y"] > y:
+            best_solution["x"] = x
+            best_solution["y"] = y
 
         if min_y is not None and y == min_y:
             break
@@ -104,9 +104,9 @@ def annealing_optimize(domain, cost_function, T=1000000.0, cool=0.99999, step=1,
 
         logger.debug("x = %s, y = %s", x, y)
 
-    if y > global_opt["y"]:
-        x = global_opt["x"]
-        y = global_opt["y"]
+    if y > best_solution["y"]:
+        x = best_solution["x"]
+        y = best_solution["y"]
 
     return x, y
 
@@ -143,7 +143,7 @@ def genetic_optimization(domain, cost_function, population_size=20, step=1, muta
         top_x = scores[0][1]
         top_y = scores[0][0]
 
-        logger.debug("%s x = %s, y = %s" % (i,top_x, top_y))
+        logger.debug("%s x = %s, y = %s" % (i, top_x, top_y))
         if top_y == min_y:
             break
 
