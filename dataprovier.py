@@ -26,6 +26,10 @@ nodes = [
 
 ]
 
+plot = (300, 800)
+
 def provide_graph():
     return {"vertex": vertex, "nodes": nodes}
 
+def provide_plot_size():
+    return plot
