@@ -61,12 +61,13 @@ if __name__ == "__main__":
     domain = []
     for i in range(len(vertex)):
         domain.append([10, plot[0] - 10])
-        domain.append([10, plot[19] - 10])
+        domain.append([10, plot[1] - 10])
 
 
     logging.info(domain)
 
-    (result_x, result_y) = optimization.annealing_optimize(domain, cost_function(vertex, nodes))
+#    (result_x, result_y) = optimization.annealing_optimize(domain, cost_function(vertex, nodes))
+    (result_x, result_y) = optimization.genetic_optimization(domain, cost_function(vertex, nodes))
 
     logging.info("result (x=" + str(result_x) + " y=" + str(result_y) + ")")
 
