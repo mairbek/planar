@@ -7,14 +7,14 @@ import view
 
 logger = logging.getLogger("planar")
 
-def crosscount(coordinates, vertex, edge, min_distance=50):
+def crosscount(coordinates, vertex, edges, min_distance=50):
     loc = dict([(vertex[i], (coordinates[i * 2], coordinates[i * 2 + 1])) for i in range(0, len(vertex))])
     total = 0
 
-    for i in range(0, len(nodes)):
-        for j in range(i + 1, len(nodes)):
-            (x1, y1), (x2, y2) = loc[edge[i][0]], loc[edge[i][1]]
-            (x3, y3), (x4, y4) = loc[edge[j][0]], loc[edge[j][1]]
+    for i in range(0, len(edges)):
+        for j in range(i + 1, len(edges)):
+            (x1, y1), (x2, y2) = loc[edges[i][0]], loc[edges[i][1]]
+            (x3, y3), (x4, y4) = loc[edges[j][0]], loc[edges[j][1]]
 
             if are_crossing(x1, y1, x2, y2, x3, y3, x4, y4):
                 total += 1
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
 
     vertex = provide_graph()["vertex"]
-    nodes = provide_graph()["nodes"]
+    edges = provide_graph()["edges"]
 
     plot = provide_plot_size()
 
@@ -66,9 +66,9 @@ if __name__ == "__main__":
 
     logging.info(domain)
 
-#    (result_x, result_y) = optimization.annealing_optimize(domain, cost_function(vertex, nodes))
-    (result_x, result_y) = optimization.genetic_optimization(domain, cost_function(vertex, nodes))
+#    (result_x, result_y) = optimization.annealing_optimize(domain, cost_function(vertex, edges))
+    (result_x, result_y) = optimization.genetic_optimization(domain, cost_function(vertex, edges))
 
     logging.info("result (x=" + str(result_x) + " y=" + str(result_y) + ")")
 
-    view.draw_graph(result_x, vertex, nodes, size=plot)
+    view.draw_graph(result_x, vertex, edges, size=plot)

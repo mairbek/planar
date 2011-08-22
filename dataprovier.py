@@ -1,6 +1,6 @@
 #vertex = ["a", "b", "c", "d"]
 #
-#nodes = [
+#edges = [
 #    ("a", "b"),
 #    ("b", "c"),
 #    ("c", "d"),
@@ -12,7 +12,7 @@
 
 vertex = ["a", "b", "c", "d", "e"]
 
-nodes = [
+edges = [
     ("a", "b"),
     ("b", "c"),
     ("c", "d"),
@@ -29,7 +29,7 @@ nodes = [
 plot = (300, 800)
 
 def provide_graph():
-    return {"vertex": vertex, "nodes": nodes}
+    return {"vertex": vertex, "edges": edges}
 
 def provide_plot_size():
     return plot
