@@ -23,7 +23,7 @@ def random_optimize(domain, cost_fun, points=1000, max_y=(10 ** 8), min_y=0):
             best_y = cost
             best_x = x
 
-        if min_y is not None and cost == min_y:
+        if min_y is not None and best_y == min_y:
             break
 
     return best_x, best_y
@@ -64,12 +64,12 @@ def hill_climb_optimize(domain, cost_fun):
     return x, y
 
 
-def annealing_optimize(domain, cost_function, T=1000000.0, cool=0.99999, step=1):
+def annealing_optimize(domain, cost_function, T=1000000.0, cool=0.99999, step=1, min_y=0):
     x = [float(random.randint(domain[i][0], domain[i][1]))
          for i in range(len(domain))]
     y = None
 
-    min = None
+    global_opt = None
 
     while T > 0.1:
         i = random.randint(0, len(domain) - 1)
@@ -92,21 +92,21 @@ def annealing_optimize(domain, cost_function, T=1000000.0, cool=0.99999, step=1)
             x = vecb
             y = eb
 
-        if min is None:
-            min = {"x": x, "y": y}
-        elif min["y"] > y:
-            min["x"] = x
-            min["y"] = y
+        if global_opt is None:
+            global_opt = {"x": x, "y": y}
+        elif global_opt["y"] > y:
+            global_opt["x"] = x
+            global_opt["y"] = y
 
-        if not y:
+        if min_y is not None and y == min_y:
             break
 
         T = T * cool
 
         logger.debug("x = %s, y = %s", x, y)
 
-    if y > min["y"]:
-        x = min["x"]
-        y = min["y"]
+    if y > global_opt["y"]:
+        x = global_opt["x"]
+        y = global_opt["y"]
 
     return x, y
