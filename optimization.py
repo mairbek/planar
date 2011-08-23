@@ -112,7 +112,7 @@ def annealing_optimize(domain, cost_function, T=1000000.0, cool=0.99999, step=1,
 
 
 def genetic_optimization(domain, cost_function, population_size=20, step=1, mutation_probability=0.4, elite_percent=0.2,
-                         max_generations=100000, min_y=0):
+                         max_generations=3000, min_y=0):
     def mutate(x):
         i = random.randint(0, len(domain) - 1)
 
